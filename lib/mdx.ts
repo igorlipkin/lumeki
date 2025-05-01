@@ -9,10 +9,10 @@ const postsDirectory = path.join(process.cwd(), 'content/posts')
 
 // Types
 export interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
+  slug?: string;
+  title?: string;
+  date?: string;
+  excerpt?: string;
   author?: string;
   categories?: string[];
   featuredImage?: string;
@@ -74,15 +74,18 @@ export async function getPosts(limit?: number) {
     const posts = await Promise.all(
       slugs.map(async (slug) => {
         const post = await getPostBySlug(slug)
-        return {
-          slug: post?.slug,
-          ...post?.frontMatter,
-        }
+        return post ? {
+          slug: post.slug,
+          ...post.frontMatter,
+        } : null
       })
     )
     
+    // Отфильтровать null значения
+    const validPosts = posts.filter(post => post !== null) as Post[];
+    
     // Sort posts by date in descending order
-    const sortedPosts = posts.sort((a, b) => {
+    const sortedPosts = validPosts.sort((a, b) => {
       if (a.date && b.date) {
         return new Date(b.date).getTime() - new Date(a.date).getTime()
       }
