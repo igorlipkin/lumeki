@@ -3,9 +3,9 @@ import { format } from 'date-fns'
 
 interface PostCardProps {
   post: {
-    slug: string;
-    title: string;
-    excerpt: string;
+    slug?: string;
+    title?: string;
+    excerpt?: string;
     date?: string;
     author?: string;
     categories?: string[];
