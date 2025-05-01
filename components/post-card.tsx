@@ -14,6 +14,10 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post }: PostCardProps) {
+  if (!post || !post.slug || !post.title) {
+    return null;
+  }
+  
   return (
     <article className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-200">
       {/* Optional featured image */}
@@ -50,9 +54,11 @@ export default function PostCard({ post }: PostCardProps) {
         </h2>
         
         {/* Post excerpt */}
-        <p className="text-gray-700 mb-4 line-clamp-3">
-          {post.excerpt}
-        </p>
+        {post.excerpt && (
+          <p className="text-gray-700 mb-4 line-clamp-3">
+            {post.excerpt}
+          </p>
+        )}
         
         {/* Post metadata */}
         <div className="flex items-center justify-between text-sm text-gray-500 mt-auto">
