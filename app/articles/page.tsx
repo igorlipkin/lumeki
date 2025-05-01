@@ -20,16 +20,18 @@ export default async function ArticlesPage() {
       </header>
       
       {posts && posts.length > 0 ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12 text-gray-500">
-          <p>Coming soon! We're working on our first articles.</p>
-        </div>
-      )}
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {posts
+      .filter(post => post && post.slug && post.title && post.excerpt)
+      .map((post) => (
+        <PostCard key={post.slug} post={post} />
+      ))}
+  </div>
+) : (
+  <div className="text-center py-12 text-gray-500">
+    <p>Coming soon! We're working on our first articles.</p>
+  </div>
+)}
     </div>
   )
 }
